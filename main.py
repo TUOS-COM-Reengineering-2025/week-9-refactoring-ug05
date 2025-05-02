@@ -64,7 +64,7 @@ def contains_heavy_item(purchases):
     return False
 
 def calculate_shipping_fee_for_heavy_items(purchases):
-    if containts_heavy_item(purchases)
+    if containts_heavy_item(purchases):
         return 50
     return 20
             
