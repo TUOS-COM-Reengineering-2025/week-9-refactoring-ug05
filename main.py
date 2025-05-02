@@ -17,7 +17,7 @@ class CustomerManager:
     def add_purchases(self, name, purchases):
         self.add_customer(name, purchases)
 
-    def get_discount_threshold(self, purchases):
+    def get_total_cost(self, purchases):
         a = 0
         for z in purchases:
             if z['price'] > self.tax_threshold:
@@ -28,48 +28,47 @@ class CustomerManager:
         return a
 
     def generate_report(self):
-        for y, x in self.customers.items():
-            a = self.get_discount_threshold(x)
+        for customer, purchases in self.customers.items():
+            total_cost = self.get_total_cost(purchases)
             
-            print(y)
-            if a > self.discount_threshold:
+            print(customer)
+            if total_cost > self.discount_threshold:
                 print("Eligible for discount")
             else:
-                if a > 300:
+                if total_cost > 300:
                     print("Potential future discount customer")
                 else:
                     print("No discount")
-            if a > 1000:
+            if total_cost > 1000:
                 print("VIP Customer!")
             else:
-                if a > 800:
+                if total_cost > 800:
                     print("Priority Customer")
 
     def calculate_shipping_fee(self, purchases):
-        heavy_item = False
-        for purchase in purchases:
-            if purchase.get('weight', 0) > 20:
-                heavy_item = True
-                break
-        if heavy_item:
+        if contains_heavy_item(purchases):
             return 50
         else:
             return 20
-
-def calculate_shipping_fee_for_heavy_items(purchases):
-    for purchase in purchases:
-        if purchase.get('weight', 0) > 20:
-            return 50
-    return 20
 
 def contains_fragile_item(purchases):
     for purchase in purchases:
         if purchase.get('fragile', False):
             return True
     return False
+
+def contains_heavy_item(purchases):
+    for purchase in purchases:
+        if purchase.get('weight', 0) > 20:
+            return True
+    return False
+
+def calculate_shipping_fee_for_heavy_items(purchases):
+    if containts_heavy_item(purchases)
+        return 50
+    return 20
             
 def calculate_shipping_fee_for_fragile_items(purchases):
     if contains_fragile_item(purchases):
         return 60
-    else:
-        return 25
+    return 25
