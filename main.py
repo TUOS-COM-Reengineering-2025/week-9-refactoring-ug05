@@ -62,15 +62,14 @@ def calculate_shipping_fee_for_heavy_items(purchases):
             return 50
     return 20
 
-def calculate_shipping_fee_for_fragile_items(purchases):
-    fragile_item = False
+def contains_fragile_item(purchases):
     for purchase in purchases:
         if purchase.get('fragile', False):
-            fragile_item = True
-            break
-    if fragile_item:
+            return True
+    return False
+            
+def calculate_shipping_fee_for_fragile_items(purchases):
+    if contains_fragile_item(purchases):
         return 60
     else:
         return 25
-
-flat_tax = 0.2
